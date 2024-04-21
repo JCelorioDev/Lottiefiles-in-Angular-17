@@ -1,27 +1,38 @@
-# EjemploLottie
+# How to use the lottie library in angular 17 here I explain it to you
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.0.
+1) The first thing we have to do:
 
-## Development server
+npm i lottie-web ngx-lottie
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+2) Configuring the app.config.ts file:
 
-## Code scaffolding
+import { provideLottieOptions } from 'ngx-lottie';
+import player from 'lottie-web';
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  providers: [provideLottieOptions({
+    player: () => player
+  })]
 
-## Build
+3) We configure our component:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+  options: AnimationOptions = {
+    path: '/assets/animation.json', 
+  };
 
-## Running unit tests
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
+  }
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+  We forgot to import lottie component
 
-## Running end-to-end tests
+  4) In our html component we paste this template:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+<ng-lottie
+width="500px"
+height="600px"
+containerClass="moving-box"
+[styles]="styles"
+[options]="options"
+(animationCreated)="animationCreated($event)"
+/>
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
